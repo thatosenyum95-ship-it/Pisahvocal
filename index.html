@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
+  <title>PisahSuara — Pemisah Vokal & Musik</title><link rel="stylesheet" href="style.css">
+</head>
+<body><main class="shell">
+  <header class="top"><div class="brand-mark">♫</div><div><p class="eyebrow">ALAT AUDIO GRATIS</p><h1>Pisah<span>Suara</span></h1></div><span class="free-tag">GRATIS</span></header>
+  <section class="intro"><p class="kicker">STUDIO AUDIO SEDERHANA</p><h2>Pisahkan vokal<br>dan musik.</h2><p class="sub">Proses file langsung di browser. Tidak perlu akun dan file tidak diunggah ke server.</p></section>
+  <section class="panel">
+    <label class="upload" for="audioFile"><span class="upload-icon">↑</span><strong>Pilih lagu dari perangkat</strong><span>MP3, WAV, atau audio yang didukung browser</span><input id="audioFile" type="file" accept="audio/*"></label>
+    <div id="fileInfo" class="file-info hidden"></div>
+    <div class="notice"><strong>Perlu diketahui</strong><p>Versi awal ini memakai teknik stereo biasa, bukan AI. Hasilnya hanya perkiraan: vokal bisa masih terdengar di musik, dan instrumen tertentu bisa ikut berkurang. Lagu mono mungkin tidak bisa dipisahkan dengan baik.</p></div>
+    <button id="processBtn" class="primary" disabled>Proses lagu</button><div id="status" class="status" role="status">Pilih file audio untuk memulai.</div>
+    <div id="results" class="results hidden">
+      <article class="track"><div class="track-head"><div><span class="track-label">TRACK 01</span><h3>Perkiraan vokal</h3></div><span class="track-icon">◖</span></div><p>Suara bagian tengah stereo (L + R).</p><audio id="vocalPlayer" controls></audio><a id="vocalDownload" class="download" download="perkiraan-vokal.wav">Unduh vokal (.wav)</a></article>
+      <article class="track"><div class="track-head"><div><span class="track-label">TRACK 02</span><h3>Perkiraan musik</h3></div><span class="track-icon">♫</span></div><p>Suara sisi stereo (L − R). Vokal tengah biasanya berkurang.</p><audio id="musicPlayer" controls></audio><a id="musicDownload" class="download" download="perkiraan-musik.wav">Unduh musik (.wav)</a></article>
+    </div>
+  </section>
+  <section class="steps"><h3>Cara menggunakan</h3><ol><li>Pilih lagu dari HP atau komputer.</li><li>Tekan <b>Proses lagu</b> dan tunggu sampai selesai.</li><li>Dengarkan kedua hasilnya, lalu unduh yang diperlukan.</li></ol></section>
+  <footer>Versi prototipe • Pemrosesan lokal di perangkat • Tidak menjanjikan pemisahan studio</footer>
+</main><script src="app.js"></script></body></html>
