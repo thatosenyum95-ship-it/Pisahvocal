@@ -1,22 +1,70 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#101827">
-  <title>PisahSuara — Pemisah Vokal & Musik</title><link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Pisahkan perkiraan vokal dan musik dari file lagu langsung di browser, gratis.">
+  <title>PisahSuara — Pemisah Vokal & Musik</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body><main class="shell">
-  <header class="top"><div class="brand-mark">♫</div><div><p class="eyebrow">ALAT AUDIO GRATIS</p><h1>Pisah<span>Suara</span></h1></div><span class="free-tag">GRATIS</span></header>
-  <section class="intro"><p class="kicker">STUDIO AUDIO SEDERHANA</p><h2>Pisahkan vokal<br>dan musik.</h2><p class="sub">Proses file langsung di browser. Tidak perlu akun dan file tidak diunggah ke server.</p></section>
-  <section class="panel">
-    <label class="upload" for="audioFile"><span class="upload-icon">↑</span><strong>Pilih lagu dari perangkat</strong><span>MP3, WAV, atau audio yang didukung browser</span><input id="audioFile" type="file" accept="audio/*"></label>
-    <div id="fileInfo" class="file-info hidden"></div>
-    <div class="notice"><strong>Perlu diketahui</strong><p>Versi awal ini memakai teknik stereo biasa, bukan AI. Hasilnya hanya perkiraan: vokal bisa masih terdengar di musik, dan instrumen tertentu bisa ikut berkurang. Lagu mono mungkin tidak bisa dipisahkan dengan baik.</p></div>
-    <button id="processBtn" class="primary" disabled>Proses lagu</button><div id="status" class="status" role="status">Pilih file audio untuk memulai.</div>
-    <div id="results" class="results hidden">
-      <article class="track"><div class="track-head"><div><span class="track-label">TRACK 01</span><h3>Perkiraan vokal</h3></div><span class="track-icon">◖</span></div><p>Suara bagian tengah stereo (L + R).</p><audio id="vocalPlayer" controls></audio><a id="vocalDownload" class="download" download="perkiraan-vokal.wav">Unduh vokal (.wav)</a></article>
-      <article class="track"><div class="track-head"><div><span class="track-label">TRACK 02</span><h3>Perkiraan musik</h3></div><span class="track-icon">♫</span></div><p>Suara sisi stereo (L − R). Vokal tengah biasanya berkurang.</p><audio id="musicPlayer" controls></audio><a id="musicDownload" class="download" download="perkiraan-musik.wav">Unduh musik (.wav)</a></article>
-    </div>
+<body>
+<main class="shell">
+  <header class="top">
+    <div class="brand-mark" aria-hidden="true">♫</div>
+    <div><p class="eyebrow">ALAT AUDIO GRATIS</p><h1>Pisah<span>Suara</span></h1></div>
+    <span class="free-tag">GRATIS</span>
+  </header>
+
+  <section class="intro">
+    <p class="kicker">STUDIO AUDIO SEDERHANA</p>
+    <h2>Vokal dan musik,<br>jadi dua hasil.</h2>
+    <p class="sub">Pilih lagu dari HP atau komputer, proses, lalu dengarkan dan unduh hasilnya. File diproses langsung di browser dan tidak dikirim ke server.</p>
   </section>
-  <section class="steps"><h3>Cara menggunakan</h3><ol><li>Pilih lagu dari HP atau komputer.</li><li>Tekan <b>Proses lagu</b> dan tunggu sampai selesai.</li><li>Dengarkan kedua hasilnya, lalu unduh yang diperlukan.</li></ol></section>
-  <footer>Versi prototipe • Pemrosesan lokal di perangkat • Tidak menjanjikan pemisahan studio</footer>
-</main><script src="app.js"></script></body></html>
+
+  <section class="panel" aria-label="Pemisah audio">
+    <div id="dropZone" class="upload">
+      <div class="upload-icon" aria-hidden="true">↑</div>
+      <strong>Masukkan file lagu</strong>
+      <span>MP3, WAV, dan format audio yang didukung browser</span>
+      <label class="choose-file" for="audioFile">Pilih file lagu</label>
+      <span class="drop-hint">Atau seret file ke area ini</span>
+      <input id="audioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac">
+    </div>
+
+    <div id="fileInfo" class="file-info hidden" aria-live="polite"></div>
+    <button id="processBtn" class="primary" disabled>♫　Pisahkan lagu</button>
+    <div id="status" class="status" role="status" aria-live="polite">Pilih file audio untuk memulai.</div>
+
+    <div id="results" class="results hidden">
+      <div class="result-heading"><span class="kicker">HASIL PEMROSESAN</span><h3>Dengarkan hasilnya</h3><p>Putar tiap hasil. Jika sesuai, unduh file WAV-nya.</p></div>
+      <article class="track">
+        <div class="track-head"><div><span class="track-label">HASIL 01</span><h3>Perkiraan vokal</h3></div><span class="track-icon" aria-hidden="true">◖</span></div>
+        <p>Suara tengah stereo (L + R), tempat vokal utama sering berada.</p>
+        <audio id="vocalPlayer" controls preload="metadata"></audio>
+        <a id="vocalDownload" class="download" download="perkiraan-vokal.wav">Unduh vokal (.wav) ↓</a>
+      </article>
+      <article class="track">
+        <div class="track-head"><div><span class="track-label">HASIL 02</span><h3>Perkiraan musik</h3></div><span class="track-icon" aria-hidden="true">♫</span></div>
+        <p>Suara sisi stereo (L − R), untuk mengurangi suara yang berada di tengah.</p>
+        <audio id="musicPlayer" controls preload="metadata"></audio>
+        <a id="musicDownload" class="download" download="perkiraan-musik.wav">Unduh musik (.wav) ↓</a>
+      </article>
+    </div>
+
+    <aside class="notice">
+      <strong>Catatan kualitas</strong>
+      <p>Versi gratis ini memakai teknik stereo sederhana, bukan pemisahan AI. Hasil bukan studio-quality: vokal mungkin masih terdengar pada musik dan instrumen tertentu bisa ikut berkurang. Hasil terbaik biasanya dari lagu stereo dengan vokal berada di tengah. File mono tidak dapat dipisahkan dengan baik memakai metode ini.</p>
+    </aside>
+    <button id="resetBtn" class="secondary hidden" type="button">Pilih lagu lain</button>
+  </section>
+
+  <section class="steps">
+    <h3>Cara menggunakan</h3>
+    <ol><li>Tekan <b>Pilih file lagu</b> dan pilih lagu dari perangkat.</li><li>Tekan <b>Pisahkan lagu</b> dan tunggu prosesnya selesai.</li><li>Dengarkan hasil vokal dan musik, lalu unduh yang diperlukan.</li></ol>
+  </section>
+  <footer>Gratis • Pemrosesan lokal di perangkat • Tidak perlu membuat akun</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
